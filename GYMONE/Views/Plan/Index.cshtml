@@ -1,0 +1,80 @@
+﻿@model IEnumerable<GYMONE.Models.PlanMasterDTO>
+@using GridMvc.Html
+@{
+    ViewBag.Title = "Plan Master Details";
+}
+
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery-1.9.1.min.js")"></script>
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+
+<script type="text/javascript">
+
+    function deleteCon() {
+        var retVal = confirm("Quieres continuar ?");
+        if (retVal == true) {
+            alert("El usuario quiere continuar!");
+            return true;
+        } else {
+            alert("El usuario no quiere continuar!");
+            return false;
+        }
+    }
+</script>
+
+<div class="container">
+
+    
+
+    <div class="clearfix"></div>
+
+
+
+    <div style="margin-top: 30px"></div>
+    <fieldset>
+        <legend class="legend">Plan Detalles</legend>
+
+
+        <div class="panel">
+
+            <div class="panel-body">
+
+
+                <div>
+                    @Html.ActionLink("Crear Plan", "Create" ,"Plan",new { @class = "btn btn-info btn-pressure"})
+                </div>
+                <div style="margin-top: 5px"></div>
+                @Html.Grid(Model).Columns(columns =>
+                    {
+
+                        columns.Add(c => c.PlanName).Titled("Nombre del Plan").Filterable(true).Encoded(false)
+        .Sanitized(false).SetWidth(50);
+                        columns.Add(c => c.PlanAmount).Titled("Precio del Plan")
+      .Sanitized(false).SetWidth(50);
+                        columns.Add(c => c.ServiceTax).Titled("Impuesto del Servicio")
+       .Sanitized(false).SetWidth(50);
+                        columns.Add(c => c.TotalAmout).Titled("Cantidad Total").Filterable(true).Encoded(false)
+      .Sanitized(false).SetWidth(50);
+                        columns.Add()
+        .Encoded(false)
+        .Sanitized(false)
+        .SetWidth(20)
+        .RenderValueAs(o => Html.ActionLink("Editar", "Edit", new { id = o.PlanID })).Titled("Editar");
+                        columns.Add()
+   .Encoded(false)
+   .Sanitized(false)
+   .SetWidth(30)
+   .RenderValueAs(o => Html.ActionLink("Eliminar", "Delete", new { id = o.PlanID },
+       new { onclick = "return confirm('¿Seguro que desea eliminar este Plan ?');" })).Titled("Eliminar");
+
+                    }).WithPaging(10).Sortable(true)
+
+            </div>
+        </div>
+
+    </fieldset>
+</div>

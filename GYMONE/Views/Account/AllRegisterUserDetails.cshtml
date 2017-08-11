@@ -1,0 +1,51 @@
+﻿@model IEnumerable<GYMONE.Models.Users>
+
+@{
+    ViewBag.Title = "All Users";
+}
+
+@using GridMvc.Html
+
+
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" />
+<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/jquery-1.9.1.min.js")"></script>
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+
+<div class="container">
+ 
+
+    
+ <div class="logo col-sm-12 text-center col-md-12 "> </div>
+
+<div class="clearfix"></div>
+
+
+    <fieldset>
+        <legend class="legend">Todos los Usuarios</legend>
+   
+              <div class="panel">
+  
+    <div class="panel-body">
+    
+        <div>
+            @Html.ActionLink("Crear Cuenta de Usuario", "Register", "Account", new { @class = "btn btn-info btn-pressure"})
+        </div>
+        <div style="margin-top: 10px"></div>
+        @Html.Grid(Model).Columns(columns =>
+                    {
+                        columns.Add(c => c.Id).Titled("ID").Encoded(false)
+     .Sanitized(false).SetWidth(50);
+                        columns.Add(c => c.UserName).Titled("Usuario").Filterable(true).Encoded(false)
+    .Sanitized(false).SetWidth(50);
+                        columns.Add(c => c.EmailID).Titled("Correo Electrónico").Filterable(true).Encoded(false)
+        .Sanitized(false).SetWidth(50);
+                    })
+
+        </div>
+                  </div>
+    </fieldset>
+</div>
